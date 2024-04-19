@@ -68,8 +68,11 @@ SECRET_KEY = secret_value.get('SECRET_KEY', '')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["b1adfc9144ab4f1ba7997cb6261faceb.vfs.cloud9.eu-west-1.amazonaws.com"]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://b1adfc9144ab4f1ba7997cb6261faceb.vfs.cloud9.eu-west-1.amazonaws.com"
+    ]
 
 # Application definition
 INSTALLED_APPS = [
