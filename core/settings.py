@@ -12,46 +12,10 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
-import boto3
-import json
 from django.urls import reverse_lazy
 from django.contrib.messages import constants as messages
 from celery.schedules import crontab
-from botocore.exceptions import ClientError
-
-def get_secret():
-
-    secret_name = "x23240334/prod/cpp"
-    region_name = "eu-west-1"
-
-    # Create a Secrets Manager client
-    session = boto3.session.Session()
-    client = session.client(
-        service_name='secretsmanager',
-        region_name=region_name
-    )
-
-    try:
-        get_secret_value_response = client.get_secret_value(
-            SecretId=secret_name
-        )
-    except ClientError as e:
-        # For a list of exceptions thrown, see
-        # https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
-        raise e
-
-    secret = get_secret_value_response['SecretString']
-    secret_dict = json.loads(secret)
-
-    return secret_dict
-
-# Fetch the secret
-try:
-    secret_value = get_secret()
-except ClientError as e:
-    # Handle error
-    print("Error retrieving secret:", e)
-    # Optionally raise the error or handle it in a different way
+import dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -60,9 +24,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# Load environment variables from .env file
+dotenv.load_dotenv()
 
-SECRET_KEY = secret_value.get('SECRET_KEY', '')
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -204,9 +170,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR / "media")
 
 # Redis configuration.
 # REDIS_URL = env("REDIS_URL")
-CELERY_BROKER_URL = secret_value.get("CELERY_BROKER_URL")
-CELERY_RESULT_BACKEND = secret_value.get("CELERY_RESULT_BACKEND")
-
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND")
 
 # Additional settings for Django Celery Beat
 # CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
@@ -243,7 +208,7 @@ AUTH_USER_MODEL = "users.CustomUser"
 
 
 # TMDB configuration
-API_KEY = secret_value.get("TMDB_API_KEY")
-BEARER_TOKEN = secret_value.get("TMDB_BEARER_TOKEN")
+API_KEY = os.environ.get("TMDB_API_KEY")
+BEARER_TOKEN = os.environ.get("TMDB_BEARER_TOKEN")
 API_BASE_URL = "https://api.themoviedb.org/3"
 MOVIE_BASE_URL = "https://image.tmdb.org/t/p"
