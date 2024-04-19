@@ -34,7 +34,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["b1adfc9144ab4f1ba7997cb6261faceb.vfs.cloud9.eu-west-1.amazonaws.com"]
+ALLOWED_HOSTS = ["b1adfc9144ab4f1ba7997cb6261faceb.vfs.cloud9.eu-west-1.amazonaws.com", "x23240334cppfinalproject-env-1.eba-3mqfmhmq.eu-west-1.elasticbeanstalk.com"]
 
 CSRF_TRUSTED_ORIGINS = [
     "https://b1adfc9144ab4f1ba7997cb6261faceb.vfs.cloud9.eu-west-1.amazonaws.com"
