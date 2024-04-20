@@ -5,6 +5,7 @@ async-timeout==4.0.3
 billiard==4.2.0
 boto3==1.34.85
 botocore==1.34.85
+celery==5.4.0
 certifi==2024.2.2
 charset-normalizer==3.3.2
 click==8.1.7
@@ -23,6 +24,7 @@ gunicorn==20.1.0
 idna==3.6
 jmespath==1.0.1
 kombu==5.3.6
+oeademola-movies-fetcher==0.0.1
 pillow==10.2.0
 prompt-toolkit==3.0.43
 psycopg2-binary==2.9.6
